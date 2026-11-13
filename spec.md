@@ -57,13 +57,50 @@ Lớp: ① nguồn sự thật · ② mơ hồ / thiếu thông tin · ③ ngoà
 
 ## §3. Khi AI sai (chặng 3)
 
-Với mỗi kịch bản đắt nhất:
+_Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
-- AI nói gì (nguyên văn) · người dùng thấy gì · làm gì tiếp · ai được báo, sau bao lâu.
-- Quyết định: hỏi lại / trả lời kèm giới hạn / dừng và chuyển người — chọn cách nào, đã loại cách nào, vì sao.
-- Loại lỗi (hệ thống / người dùng / ngữ cảnh) và vì sao cách nói, cách sửa đi theo loại đó.
-- 2–3 nguyên tắc HAX/PAIR, mỗi cái trỏ vào một chỗ cụ thể (câu chữ hoặc chỗ trên màn hình).
-- Lỗi nào sửa câu chữ không cứu được (nếu có), và thiết kế cứu nó thế nào.
+### #4 · Mô tả bị sửa (xám khói → đen)
+
+**AI nói (nguyên văn):**
+
+> "Mình đã kiểm tra đơn #A123. Lúc bạn đặt (ngày 01/11), trang sản phẩm ghi màu **'xám khói'**. Ngày 03/11 shop đã đổi trang thành **'đen'** cho lô hàng mới. Áo bạn nhận được khớp với mô tả **lúc bạn đặt**, nên mình chưa thấy căn cứ để coi là không đúng mô tả. Nếu bạn thấy áo vẫn khác ảnh lúc đặt, bạn có thể gửi ảnh, mình sẽ chuyển nhân viên xem."
+
+- **Người dùng thấy:** thẻ **"Căn cứ"** hiện hai bản mô tả cạnh nhau (lúc đặt / hiện tại), có ngày và phần thay đổi được tô màu · nhãn "Trợ lý AI" · nút **"Đã hiểu"** và **"Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"**.
+- **Làm gì tiếp:** bấm "Đã hiểu" → kết thúc, không ai bị báo. Bấm nút còn lại → gửi ảnh → hồ sơ (`chuyen_truong_nhom`) tới nhân viên kèm cả hai bản mô tả.
+- **Ai được báo, sau bao lâu:** chỉ khi khách gửi lên: nhân viên nhận hồ sơ trong 24h; người bán nhận thông báo khiếu nại kèm hạn phản hồi (hai bên cùng được nghe — rubric riêng T4, mục 3).
+- **Quyết định: trả lời kèm giới hạn.**
+    - Loại **hỏi lại**: AI đã đủ dữ liệu (có bản lưu lúc đặt), hỏi thêm chỉ làm khách bực (như #10).
+    - Loại **chuyển người ngay**: nhân viên cũng chỉ nhìn đúng hai bản mô tả đó → khách chờ vô ích (hướng C ở §1).
+    - Giới hạn: AI nói "chưa thấy căn cứ", **không** nói "khiếu nại bị từ chối" — đóng khiếu nại là `tu_choi_khieu_nai`, AI không được tự làm (§1). Nút chuyển nhân viên luôn có.
+- **Loại lỗi: lỗi ngữ cảnh.** Hệ thống chạy đúng (shop được quyền sửa trang), nhưng khách nhìn trang hiện tại mà không biết trang đã đổi.
+    - Cách nói: không trách khách ("bạn nhầm rồi"), không xin lỗi như thể sàn làm sai; chỉ cho khách thấy căn cứ.
+    - Cách sửa: sửa thiết kế — trang đơn hàng hiện cảnh báo _"Mô tả đã thay đổi sau khi bạn đặt"_.
+- **Lỗi sửa câu chữ không cứu được:** nếu hệ thống **không lưu bản mô tả lúc đặt**, AI chỉ đọc được trang hiện tại; câu khéo đến đâu cũng không có căn cứ để so. **Thiết kế cứu:** lưu bản mô tả tại thời điểm đặt hàng, hiện cả hai bản kèm phần khác nhau.
+
+### #6 · Người bán đúng (giày tem 42, khách thấy chật như 41)
+
+**AI nói (nguyên văn):**
+
+> "Mình thấy tem giày bạn gửi ghi **size 42**, khớp với mô tả lúc đặt, nên hiện **chưa đủ căn cứ** để coi là không đúng mô tả. Form giày mỗi hãng có thể khác nhau. Mô tả có bảng size ghi size 42 dài lòng **27 cm**. Bạn đo giúp mình chiều dài lòng giày và gửi ảnh thước đo nhé. Nếu lệch so với bảng size, mình sẽ hướng dẫn bạn gửi yêu cầu trả hàng. Hạn trả hàng của bạn còn **X ngày**."
+
+- **Người dùng thấy:** thẻ **"Căn cứ"** (ảnh tem cạnh dòng "Size 42" và bảng size của mô tả lúc đặt) · thẻ **"Còn thiếu"** chỉ có **1 mục**: "Ảnh đo chiều dài lòng giày" · đồng hồ **hạn trả hàng** · nút **"Gửi ảnh đo"** và **"Tôi không đồng ý → chuyển nhân viên"**.
+- **Làm gì tiếp:** gửi ảnh đo → lệch so với bảng size thì hướng dẫn gửi yêu cầu trả hàng, không lệch thì AI nói rõ là không lệch. Hoặc bấm chuyển nhân viên. Khách không làm gì → nhắc lại trước khi hết hạn trả hàng (chặn hướng B).
+- **Ai được báo, sau bao lâu:** chưa báo ai cho tới khi có yêu cầu chính thức hoặc khách bấm chuyển; khi đó nhân viên nhận hồ sơ trong 24h, hồ sơ ghi **căn cứ của cả hai phía** (tem khớp + cảm nhận của khách); người bán nhận thông báo kèm hạn phản hồi.
+- **Quyết định: xin đúng một bằng chứng đo được, kèm trả lời có giới hạn.**
+    - Loại **hướng dẫn hoàn ngay**: chính là hướng A — người bán đúng mà vẫn thua.
+    - Loại **hỏi lại chung chung** ("bạn gửi thêm ảnh nhé"): khách không biết phải gửi gì (lời người mua trong track: "không ai nói tôi còn thiếu cái gì").
+    - Loại **chuyển người ngay**: nhân viên cũng cần đúng số đo đó → chỉ làm khách chờ thêm.
+- **Loại lỗi: lỗi người dùng** (kỳ vọng lệch: "chật" ≠ "sai size").
+    - Cách nói: không đổ lỗi ("bạn đi chân to"), đưa cách kiểm tra khách quan.
+    - Cách sửa: đổi câu chữ + xin bằng chứng đo được.
+
+### Nguyên tắc HAX/PAIR
+
+| Nguyên tắc | Chỗ cụ thể |
+| --- | --- |
+| **G11 — Giải thích vì sao** | Thẻ "Căn cứ": hai bản mô tả ở #4; ảnh tem cạnh bảng size ở #6 |
+| **G10 — Thu hẹp phạm vi khi nghi ngờ** | #6: AI không kết luận mà xin **đúng 1** số đo; thẻ "Còn thiếu" chỉ có 1 mục |
+| **G9 — Sửa dễ dàng** | Nút "Tôi không đồng ý → chuyển nhân viên" luôn hiện: khách sửa được kết luận của AI, AI không phải trọng tài |
 
 ## §4. Mức tự chủ (chặng 4)
 

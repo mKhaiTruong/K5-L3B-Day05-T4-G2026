@@ -65,7 +65,7 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 > "Mình đã kiểm tra đơn #A123. Lúc bạn đặt (ngày 01/11), trang sản phẩm ghi màu **'xám khói'**. Ngày 03/11 shop đã đổi trang thành **'đen'** cho lô hàng mới. Áo bạn nhận được khớp với mô tả **lúc bạn đặt**, nên mình chưa thấy căn cứ để coi là không đúng mô tả. Nếu bạn thấy áo vẫn khác ảnh lúc đặt, bạn có thể gửi ảnh, mình sẽ chuyển nhân viên xem."
 
-- **Người dùng thấy:** thẻ **"Căn cứ"** hiện hai bản mô tả cạnh nhau (lúc đặt / hiện tại), có ngày và phần thay đổi được tô màu · nhãn "Trợ lý AI" · nút **"Đã hiểu"** và **"Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"**.
+- **Người dùng thấy:** thẻ **"Căn cứ"** hiện hai bản mô tả cạnh nhau (lúc đặt / hiện tại), có ngày và phần thay đổi được tô màu · nhãn "Trợ lý AI" · chip **"Hạn trả hàng: còn 5 ngày"** · nút **"Đã hiểu"** và **"Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"**.
 - **Làm gì tiếp:** bấm "Đã hiểu" → kết thúc, không ai bị báo. Bấm nút còn lại → gửi ảnh → hồ sơ (`chuyen_truong_nhom`) tới nhân viên kèm cả hai bản mô tả.
 - **Ai được báo, sau bao lâu:** chỉ khi khách gửi lên: nhân viên nhận hồ sơ trong 24h; người bán nhận thông báo khiếu nại kèm hạn phản hồi (hai bên cùng được nghe — rubric riêng T4, mục 3).
 - **Quyết định: trả lời kèm giới hạn.**
@@ -81,7 +81,7 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 **AI nói (nguyên văn):**
 
-> "Mình thấy tem giày bạn gửi ghi **size 42**, khớp với mô tả lúc đặt, nên hiện **chưa đủ căn cứ** để coi là không đúng mô tả. Form giày mỗi hãng có thể khác nhau. Mô tả có bảng size ghi size 42 dài lòng **27 cm**. Bạn đo giúp mình chiều dài lòng giày và gửi ảnh thước đo nhé. Nếu lệch so với bảng size, mình sẽ hướng dẫn bạn gửi yêu cầu trả hàng. Hạn trả hàng của bạn còn **X ngày**."
+> "Mình thấy tem giày bạn gửi ghi **size 42**, khớp với mô tả lúc đặt, nên hiện **chưa đủ căn cứ** để coi là không đúng mô tả. Form giày mỗi hãng có thể khác nhau. Mô tả có bảng size ghi size 42 dài lòng **27 cm**. Bạn đo giúp mình chiều dài lòng giày và gửi ảnh thước đo nhé. Nếu lệch so với bảng size, mình sẽ hướng dẫn bạn gửi yêu cầu trả hàng. Hạn trả hàng của bạn còn **5 ngày**."
 
 - **Người dùng thấy:** thẻ **"Căn cứ"** (ảnh tem cạnh dòng "Size 42" và bảng size của mô tả lúc đặt) · thẻ **"Còn thiếu"** chỉ có **1 mục**: "Ảnh đo chiều dài lòng giày" · đồng hồ **hạn trả hàng** · nút **"Gửi ảnh đo"** và **"Tôi không đồng ý → chuyển nhân viên"**.
 - **Làm gì tiếp:** gửi ảnh đo → lệch so với bảng size thì hướng dẫn gửi yêu cầu trả hàng, không lệch thì AI nói rõ là không lệch. Hoặc bấm chuyển nhân viên. Khách không làm gì → nhắc lại trước khi hết hạn trả hàng (chặn hướng B).
@@ -167,34 +167,80 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 ## §5. Prototype (chặng 5)
 
-_Nháp — người dựng prototype cập nhật khi có bản thật._
 
-- **Ca dựng:** #4 — mô tả bị sửa (xám khói → đen). Đây là ca demo bắt buộc "mô tả đã bị sửa".
-- **Link / file:** \_\_\_\_ · **Công cụ:** \_\_\_\_ · **Phần mock:** dữ liệu đơn, hai bản mô tả, câu AI (viết sẵn) · **Lời gọi AI thật:** \_\_\_\_
-- **2 màn hình dự kiến:**
-  1. **Chat người mua** — khách nhắn khiếu nại → AI trả lời câu nguyên văn ở §3 kèm thẻ "Căn cứ".
-  2. **Màn hình nhân viên duyệt** — hồ sơ hai phía, nút duyệt hoàn tiền (mức _cần duyệt_).
+- **Ca dựng:** #4 — mô tả bị sửa (xám khói → đen). Đây là ca demo bắt buộc "mô tả đã bị sửa". Prototype có thêm tab **#6** để thử nhánh "một mục còn thiếu" (không phải ca demo chính).
+- **Link / file:** [`prototype/index.html`](prototype/index.html) — mở bằng trình duyệt, không cần cài đặt · **Công cụ:** HTML/CSS/JS thuần, một file · **Phần mock:** toàn bộ dữ liệu đơn #A123, hai bản mô tả, câu AI viết sẵn, phản hồi người bán, hạn trả hàng 5 ngày, hạn phản hồi 48 giờ; không backend · **Lời gọi AI thật:** **không** — toàn bộ viết sẵn, không có API key.
+- **2 màn hình (đã dựng):**
+  1. **Chat người mua** — khách nhắn khiếu nại → AI trả lời đúng câu nguyên văn §3 #4 → thẻ "Căn cứ" hai bản mô tả (ngày, tô phần đổi) → chip **"Hạn trả hàng: còn 5 ngày"** → nút **"Đã hiểu"** và **"Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"**. Bấm nút sau: `chuyen_truong_nhom` (tự làm) + ảnh khách + nút **"Rút lại"**; có tab **#6** để gửi ảnh đo và xem nhánh "Còn thiếu".
+  2. **Màn hình nhân viên** — hồ sơ #A123 gồm căn cứ hai phía (hai bản mô tả + diff, ảnh khách, phản hồi người bán), **không có kết luận/đề xuất của AI**; mô phỏng phản hồi người bán; nút **"Duyệt hoàn tiền"** chỉ bật sau khi người bán phản hồi hoặc hết hạn.
 
-**Các chỗ sẽ đánh số trên ảnh (dự kiến):**
+**Ảnh đánh số** (số trên ảnh khớp legend trong prototype):
+
+![Màn 1 — chat người mua, ca #4](prototype/1-man1-chat-nguoi-mua-ca4.png)
+
+![Màn 2 — nhân viên duyệt hồ sơ, ca #4](prototype/2-man2-nhan-vien-duyet-ca4.png)
+
+> Ảnh 1 chụp trạng thái **sau khi bấm chuyển** (thấy "Rút lại"); nút "Tôi vẫn thấy không đúng" ở trạng thái trước đó, bấm được trong prototype.
 
 | Số  | Màn hình  | Thể hiện gì                                                        | Nguyên tắc                  | Mức tự chủ                                |
 | --- | --------- | ------------------------------------------------------------------ | --------------------------- | ----------------------------------------- |
 | 1   | Chat      | Nhãn "Trợ lý AI"                                                   | G2                          | —                                         |
 | 2   | Chat      | Thẻ "Căn cứ": hai bản mô tả cạnh nhau, có ngày, tô phần thay đổi   | G11                         | —                                         |
 | 3   | Chat      | Câu AI "chưa thấy căn cứ", không nói "từ chối"                     | G10                         | `tu_choi_khieu_nai` cấm → không có nút    |
-| 4   | Chat      | Nút "Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"              | G9                          | `chuyen_truong_nhom` tự làm, có "Rút lại" |
+| 4   | Chat      | Nút "Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên" + "Rút lại"  | G9                          | `chuyen_truong_nhom` tự làm, có "Rút lại" |
 | 5   | Nhân viên | Hồ sơ hai phía, không có kết luận của AI                           | PAIR Explainability + Trust | —                                         |
 | 6   | Nhân viên | Nút "Duyệt hoàn tiền" chỉ bật sau khi người bán phản hồi / hết hạn | —                           | `duyet_hoan_tien` cần duyệt               |
 
-**Quyết định cách hiện (nháp):**
+> Chip "Hạn trả hàng: còn 5 ngày" hiện ở cả 2 màn nhưng không đánh số; đây là bằng chứng cho C3 / T4 rubric 8.
+
+**Quyết định cách hiện (đã chọn):**
 
 - **Độ chắc / bằng chứng:** hiện **căn cứ** (hai bản mô tả) thay vì **% độ tin cậy**. Loại % vì con số không cho khách tự kiểm được gì; căn cứ thì khách và nhân viên tự nhìn thấy mô tả đã đổi.
 - **Hai bản mô tả:** đặt **cạnh nhau, tô phần khác** thay vì chỉ ghi một dòng chữ "mô tả đã đổi". Loại dòng chữ vì khách vẫn phải tin lời AI, không tự thấy được.
-- **Việc cấm:** **không có nút** trên màn hình (không phải nút bị làm mờ), để không gợi ý là AI có thể làm.
+- **Việc cấm:** **không có nút** trên màn hình (không phải nút bị làm mờ), để không gợi ý là AI có thể làm. Áp dụng cho `tu_choi_khieu_nai`, `phat_shop`.
+- **Hạn trả hàng:** **chip đếm ngày ngay cạnh câu AI**, thay vì để trong chính sách/trang trợ giúp. Loại chính sách vì khách không đọc; hướng B chỉ chặn được khi khách thấy hạn đúng lúc quyết định.
+- **Màn nhân viên:** chỉ hiện **căn cứ hai phía**, không hiện kết luận/đề xuất của AI. Loại đề xuất của AI vì người duyệt dễ bị hồ sơ dẫn dắt — đúng cái giá của mức "cần duyệt" ở #6 (§4).
+- **Chuyển nhân viên:** **tự làm + "Rút lại"**, thay vì hộp xác nhận trước khi chuyển. Loại hộp xác nhận vì đây là đường thoát khi AI không chắc; bắt xác nhận làm khách chờ, còn chuyển nhầm thì đảo được.
 
-## §6. Tốt là gì (chặng 6 — nhẹ, bỏ được nếu thiếu giờ)
+## §6. Tốt là gì
 
-- 3 tiêu chí Pass/Fail chấm được; thiết kế của nhóm đạt tiêu chí nào trên 2 kịch bản đắt nhất; lỗi còn lại.
+
+### 3 tiêu chí Pass/Fail
+
+**C1 — Căn cứ đúng lúc đặt.**
+- **Pass:** mọi kết luận "đúng/không đúng mô tả" dựa trên **bản lưu mô tả lúc đặt** + ngày; nếu mô tả đã đổi, hiện **cả hai bản** + ngày + tô phần khác; nếu không có bản lưu, AI nói rõ "không có bản lưu" và chuyển người, không lấy bản hiện tại làm chuẩn.
+- **Fail:** dùng mô tả hiện tại; chỉ nói "mô tả đã đổi" mà không cho xem hai bản; trích/bịa nội dung không có trong bản lưu.
+- **Cách chấm:** mở thẻ "Căn cứ" ở #4/#6, đối chiếu từng câu trích với bản lưu 01/11; nếu bản lưu không có, AI phải nói rõ và chuyển người (không lấy bản hiện tại).
+- **Trỏ về:** T4 rubric 1; §3 #4, #6; §5 số 2.
+
+**C2 — Không tự quyết thay người.**
+- **Pass khi đồng thời:** (a) không có nút/lệnh/câu nói cho `tu_choi_khieu_nai`, `phat_shop`; `soan_de_xuat_hoan` chỉ soạn, không chuyển tiền; (b) không hứa việc ngoài tool ("hoàn trong 24h", "đã báo khoá shop"); (c) tiền chỉ chuyển bằng `duyet_hoan_tien` sau khi người bán phản hồi hoặc hết hạn phản hồi; (d) "chưa thấy căn cứ" không bị nói thành "khiếu nại bị từ chối"; (e) nút chuyển nhân viên luôn mở.
+- **Fail:** bất kỳ (a)–(e) sai.
+- **Cách chấm:** xem legend/prototype; thử bấm "Duyệt hoàn tiền" trước khi người bán phản hồi → phải bị khoá; tìm nút từ chối/phạt → không có.
+- **Trỏ về:** §4 (tách 2 bước, cấm 2 tool, luật 2–4); T4 rubric 3, 4, 5, 7; §5 số 3, 4, 6.
+
+**C3 — "Chưa đủ căn cứ" phải đi được bước tiếp theo.**
+- **Pass khi:** (i) nêu đúng **một** mục còn thiếu, kiểm được với dữ liệu đơn (ảnh, số đo, tin nhắn người bán) — không phải "gửi thêm ảnh" chung chung; (ii) nêu hạn còn lại bằng **số cụ thể** (hạn trả hàng của người mua hoặc hạn phản hồi của người bán); (iii) có nút gửi đúng mục đó hoặc chuyển nhân viên. Nếu đang chờ bằng chứng mà khách không gửi → nhắc trước hạn.
+- **Fail:** thiếu bất kỳ phần nào; xin lặp mẫu chung chung; để "X ngày" thay vì số thật; không nhắc.
+- **Cách chấm:** đọc câu AI, đếm đủ (i)(ii)(iii); với trạng thái khách không làm gì, xem thiết kế nhắc hạn ở §3 #6 (prototype chưa mô phỏng — lỗi còn lại 2).
+- **Trỏ về:** T4 rubric 8; #10; §3 #6; §5 (chip hạn, số 4; tab #6).
+
+### Chấm thử trên 2 kịch bản đắt nhất
+
+| Ca | C1 | C2 | C3 | Kết quả |
+|---|---|---|---|---|
+| **#4** mô tả bị sửa | **Pass** — thẻ "Căn cứ" hai bản 01/11 vs 03/11; quote dùng bản lúc đặt | **Pass** — không nút từ chối/phạt; hoàn tiền chờ duyệt; chuyển nhân viên luôn mở | **Pass (mức tối thiểu)** — chip hạn 5 ngày; một mục "ảnh áo nhận được"; nút chuyển | **3/3** |
+| **#6** tem 42 | **Pass** — bảng size 27 cm lúc đặt cạnh ảnh tem 42 | **Pass** — "chưa đủ căn cứ"; `soan_de_xuat_hoan` chỉ soạn; nhân viên duyệt | **Pass** — thẻ "Còn thiếu (1 mục)"; hạn 5 ngày; nút gửi ảnh/chuyển | **3/3** |
+
+**Lỗi còn lại + cách sửa:**
+
+1. **#4 chưa có thẻ "Còn thiếu" như #6.** Câu AI chỉ nói "gửi ảnh"; nên thêm 1 mục "Ảnh áo nhận được, chụp cạnh ảnh lúc đặt" để C3 rõ ngang #6. C3-#4 đạt mức tối thiểu, nhưng chưa rõ bằng #6.
+2. **Prototype chưa mô phỏng trạng thái "khách không gửi ảnh → nhắc trước hạn"** (§3 #6 có thiết kế, màn hình chưa có). Nếu muốn chứng minh C3 đầy đủ, thêm một trạng thái/nút giả lập.
+3. **Ảnh khách gửi không kiểm chứng được** (ảnh cũ/dựng/chụp không đúng thời điểm). Không tự hoàn tiền; nhân viên xem ảnh gốc + yêu cầu chụp lại nếu nghi. Giới hạn chấp nhận được vì C2 vẫn giữ.
+4. **C1 phụ thuộc snapshot mô tả lúc đặt.** Nếu hệ thống không lưu, câu chữ không cứu được — yêu cầu thiết kế đã ghi ở §3.
+5. **Không có lời gọi AI thật** → bonus +3 chưa đạt; nếu thêm, chỉ dùng dữ liệu dựng, không để API key.
+
+**Kết luận:** cả #4 và #6 đạt 3/3; các lỗi còn lại thuộc độ rõ của bằng chứng và khả năng kiểm chứng ảnh, không phải lỗi thẩm quyền hay lỗi tự quyết thay người.
 
 ## §7. Demo
 

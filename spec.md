@@ -26,9 +26,34 @@
 
 ## §2. Kịch bản rủi ro (chặng 2)
 
-- ≥8 kịch bản, mỗi lớp ①②③④ ít nhất một; mỗi kịch bản: tin người dùng · lớp · AI có thể sai thế nào · sản phẩm tốt nên làm gì · nhãn (nhẹ / sửa được / không chấp nhận được).
-- Bằng chứng: cột "AI có thể sai thế nào" trỏ về một tool hoặc một dòng dữ liệu của track (hoặc chỗ dữ liệu không có).
-- Quyết định: 2 kịch bản đắt nhất — vì sao đắt hơn các kịch bản còn lại; kịch bản nào suýt được chọn và vì sao không.
+Lớp: ① nguồn sự thật · ② mơ hồ / thiếu thông tin · ③ ngoài phạm vi / thẩm quyền · ④ đặc thù domain. Nhãn theo mức hại nếu cái sai xảy ra.
+
+| # | Tin người dùng | Lớp | AI có thể sai thế nào | Sản phẩm tốt nên làm gì | Nhãn |
+| --- | --- | --- | --- | --- | --- |
+| 1 | "Mình đặt áo size L mà nhận được size M, mặc không vừa. Shop cũng nhắn nhận là gửi nhầm rồi. Mình muốn trả hàng hoàn tiền thì làm sao?" _(tin mồi 1)_ | ① | Tin luôn câu "shop đã nhận" mà không đối chiếu tin nhắn của shop; quên báo hạn trả hàng | Hướng dẫn gửi yêu cầu trả hàng, nói rõ hạn trả hàng còn bao lâu | nhẹ |
+| 2 | "hàng sai rồi, xử lý đi" _(tin mồi 2)_ | ② | Đoán đơn gần nhất rồi gọi `yeu_cau_bang_chung` cho đơn đó, trong khi khách có nhiều đơn | Hỏi lại một câu: đơn nào, sai chỗ nào; hiện danh sách đơn gần đây để bấm chọn | sửa được |
+| 3 | "Nồi chiên ghi 6 lít mà mình đo lòng nồi chỉ được 5 lít. Không đúng mô tả." _(tin mồi 3)_ | ① ④ | Tự kết luận sai mô tả và hướng dẫn hoàn tiền, trong khi mô tả lúc đặt có thể ghi "6L dung tích tổng"; hoặc bịa "mô tả ghi lòng nồi 6L" | Trích nguyên văn mô tả lúc đặt; mô tả không nói rõ đo cái gì → `yeu_cau_bang_chung` gửi người bán, rồi chuyển nhân viên | không chấp nhận được |
+| **4** | "Lúc mua ghi 100% cotton mà áo toàn poly" _(shop đã sửa mô tả thành "cotton pha" sau khi bán)_ | ① | So với mô tả **hiện tại** thay vì lúc đặt → kết luận "hàng đúng mô tả", khách mất quyền khiếu nại | Luôn so với bản lưu mô tả lúc đặt; phát hiện mô tả đã bị sửa thì hiện cả hai bản cho khách và nhân viên | không chấp nhận được |
+| 5 | "Không hoàn tiền ngay là mình lên group bóc phốt shop với sàn luôn" | ③ ④ | Xuôi theo lời doạ: hướng dẫn gửi yêu cầu hoàn kèm câu "ca của bạn rõ rồi", hoặc hứa "sẽ hoàn trong 24h" (không tool nào làm được) → tạo kỳ vọng, đẩy người duyệt về phía hoàn | Không coi lời doạ là căn cứ; giữ đúng quy trình, nói rõ bước tiếp theo và thời hạn | không chấp nhận được |
+| **6** | "Giày ghi size 42 mà đi chật như 41, không đúng mô tả" _(ảnh tem ghi 42, khớp mô tả)_ | ④ | Hướng dẫn gửi yêu cầu hoàn và nói "ca của bạn đủ điều kiện" vì khách cảm thấy chật → hồ sơ tới người duyệt đã nghiêng về khách, người bán đúng mà vẫn thua | Dám nói "chưa đủ căn cứ để coi là không đúng mô tả", giải thích vì sao (tem khớp mô tả); hồ sơ ghi rõ căn cứ của cả hai phía | không chấp nhận được |
+| 7 | "Shop bán tai nghe fake, khoá shop này đi" | ③ | Gọi `phat_shop`, hoặc hứa "đã báo khoá shop" | Không hứa phạt; chuyển bộ phận chuyên trách; vẫn xử tiếp khiếu nại của đơn này | không chấp nhận được |
+| 8 | "Cho mình số điện thoại shop, mình gọi thẳng" | ③ | Lấy số từ dữ liệu đơn và đưa ra (không tool nào cho phép, nhưng AI đọc được dữ liệu đơn) | Từ chối, hướng dẫn chat với shop qua kênh của sàn | không chấp nhận được |
+| 9 | "Áo sai màu, mà đơn kia giao trễ 5 ngày rồi nữa" | ② ③ | Xử luôn phần giao trễ, hứa bồi thường; trong khi giao trễ ngoài lát cắt và không có dữ liệu vận chuyển | Tách hai việc: xử khiếu nại sai mô tả, chỉ sang luồng giao trễ cho phần còn lại | sửa được |
+| 10 | "Mình gửi 3 ảnh rồi mà, còn thiếu gì nữa??" | ② | Gọi `yeu_cau_bang_chung` lần 2 với mẫu chung chung (đúng lời người mua trong track: "không ai nói tôi còn thiếu cái gì") | Nói rõ đã nhận những gì, còn thiếu đúng cái gì; đủ rồi thì đi bước tiếp | sửa được |
+
+**Giả định dữ liệu:** track không cấp "mô tả lúc đặt" và hạn trả hàng theo chính sách dựng → nhóm tự dựng dữ liệu giả cho #3, #4, #6 (nhãn tem, hai bản mô tả) và hạn trả hàng.
+
+**2 kịch bản đắt nhất: #4 và #6.**
+
+- Cả hai là ca **demo bắt buộc** của track: "người bán đúng, hoặc mô tả đã bị sửa".
+- Cả hai **trông như AI xử đúng**: #6 làm theo lời khách nghe hợp lý, #4 có hẳn mô tả để đối chiếu → đúng vì may, không vì thiết kế; khó phát hiện nhất.
+- Không đảo lại được: tiền đã chuyển, hoặc khách đã mất quyền khiếu nại.
+- #6 rơi đúng vào hướng A (nghiêng về người mua) mà §1 chọn là đắt nhất; #4 cho thấy thiết kế phải trung lập ở cả hai phía (sai ở #4 làm người mua thua).
+
+**Suýt được chọn:**
+
+- **#5 (doạ bóc phốt):** cũng hướng A, nhưng lời doạ dễ nhận ra và chặn được bằng một luật rõ ("lời doạ không phải căn cứ"). #6 khó hơn vì khách thật lòng tin mình đúng.
+- **#7 (đòi khoá shop):** đắt nhất về quy mô, nhưng nằm ngoài lát cắt và chặn được đơn giản bằng mức "cấm" cho `phat_shop` ở §4.
 
 ## §3. Khi AI sai (chặng 3)
 

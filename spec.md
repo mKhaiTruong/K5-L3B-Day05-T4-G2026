@@ -2,11 +2,11 @@
 
 **Lớp:** L3B · **Bàn / zone:** \_\_\_\_ · **Track:** T4 · Thương mại điện tử
 
-| Họ và Tên             | Mã Học Viên | Việc đã làm |
-| --------------------- | ----------- | ----------- |
-| Trương Đặng Minh Khuê | 2A202603785 | ????        |
-| Trịnh Tuấn Phong      | 2A202603781 | ????        |
-| Triệu Quốc Khánh      | 2A202603749 | ????        |
+| Họ và Tên             | Mã Học Viên | Việc đã làm                                                                                                                                                     |
+| --------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trương Đặng Minh Khuê | 2A202603785 | Soạn kịch bản demo 4', chuẩn bị 3–4 ca lạ để tập trả lời, chia ai nói phần nào                                                                                  |
+| Trịnh Tuấn Phong      | 2A202603781 | Đưa câu AI nguyên văn ở §3 vào prototype; chụp ảnh, đánh số; viết prototype/README.md và hoàn thiện §5 và Viết §6: 3 tiêu chí Pass/Fail, chấm thử trên #4 và #6 |
+| Triệu Quốc Khánh      | 2A202603749 | Dựng prototype ca #4, gồm 2 màn hình: chat người mua và màn hình nhân viên duyệt                                                                                |
 
 ## §1. Lát cắt & phạm vi
 

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prototype T4 · Trò chuyện với Shopee · Nhóm G2026</title>
+<style>
+:root{--ink:#1f2937;--muted:#6b7280;--line:#e5e7eb;--bg:#f3f4f6;--card:#fff;--brand:#ee4d2d;
+--ok:#166534;--okbg:#dcfce7;--warn:#92400e;--warnbg:#fef3c7;--bad:#991b1b;--badbg:#fee2e2;--ai:#eff6ff;--ailine:#bfdbfe}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);font-size:16px;line-height:1.5}
+header{background:var(--brand);color:#fff;padding:12px 20px}
+header h1{margin:0;font-size:18px}
+header p{margin:2px 0 0;font-size:13px;opacity:.9}
+nav{display:flex;gap:8px;padding:12px 20px 0;max-width:1180px;margin:0 auto}
+nav button,.sc button{font:inherit;border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:8px;cursor:pointer}
+nav button.on,.sc button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+main{display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:20px;max-width:1180px;margin:0 auto;padding:12px 20px 40px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.sc{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.sc .reset{margin-left:auto;font-size:14px}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:380px}
+.msg{max-width:92%;padding:10px 12px;border-radius:12px}
+.msg.user{align-self:flex-end;background:#fff7ed;border:1px solid #fed7aa}
+.msg.ai{align-self:flex-start;background:var(--ai);border:1px solid var(--ailine)}
+.msg.sys{align-self:center;background:#f9fafb;border:1px dashed var(--line);font-size:14px;color:var(--muted);text-align:center}
+.msg p{margin:6px 0}
+.who{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:600;margin-bottom:4px;flex-wrap:wrap}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.chip.auto{background:var(--okbg);color:var(--ok)}
+.chip.approve{background:var(--warnbg);color:var(--warn)}
+.chip.ban{background:var(--badbg);color:var(--bad)}
+.chip.note{background:#e0e7ff;color:#3730a3}
+.tools{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0}
+.tool{font-size:13px;background:#f9fafb;border:1px solid var(--line);border-radius:8px;padding:3px 8px}
+.card{border:1px solid var(--line);border-radius:10px;background:#fff;margin:8px 0;overflow:hidden}
+.card h4{margin:0;padding:6px 10px;font-size:13px;background:#f9fafb;border-bottom:1px solid var(--line)}
+.two{display:grid;grid-template-columns:1fr 1fr}
+.two div{padding:8px 10px;font-size:14px}
+.two div+div{border-left:1px solid var(--line)}
+.two+.two{border-top:1px solid var(--line)}
+.two b{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.diff{background:#fef08a;padding:0 3px;border-radius:3px}
+.need{padding:8px 10px;font-size:14px}
+.deadline{display:inline-flex;gap:6px;align-items:center;font-size:13px;background:var(--warnbg);color:var(--warn);padding:3px 10px;border-radius:999px;font-weight:600}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.acts button{font:inherit;font-size:15px;padding:9px 14px;border-radius:8px;border:1px solid var(--ink);background:#fff;cursor:pointer}
+.acts button.pri{background:var(--ink);color:#fff}
+.acts button:disabled{opacity:.5;cursor:not-allowed;border-style:dashed}
+.mk{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;margin-left:4px;vertical-align:middle}
+.legend h3{margin:0 0 8px;font-size:16px}
+.legend ol{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.legend li{font-size:14px;display:flex;gap:8px}
+.legend li .mk{margin:2px 0 0;flex:none}
+.legend .lv{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:grid;gap:6px;font-size:14px}
+.banner{background:#ede9fe;border:1px solid #c4b5fd;color:#4c1d95;border-radius:8px;padding:6px 10px;font-size:13px;margin-bottom:12px}
+.hidden{display:none}
+.empty{color:var(--muted);padding:24px;text-align:center}
+.case{margin-bottom:16px}
+.case h3{margin:0 0 4px;font-size:16px}
+.muted{color:var(--muted);font-size:13px;margin:0 0 8px}
+.sim{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0;font-size:13px;color:var(--muted)}
+.sim button{font:inherit;font-size:13px;padding:4px 10px;border-radius:8px;border:1px dashed var(--muted);background:#fff;cursor:pointer}
+.result{margin-top:10px;padding:8px 10px;background:var(--okbg);color:var(--ok);border-radius:8px;font-size:14px}
+.gate{font-size:13px;color:var(--warn);margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Trò chuyện với Shopee · Trợ lý khiếu nại "hàng không đúng mô tả"</h1>
+  <p>Prototype thiết kế · Nhóm G2026 · L3B · T4 · Toàn bộ dữ liệu là dữ liệu giả, không có backend, không có lời gọi AI thật</p>
+</header>
+<nav>
+  <button id="nav1" class="on" data-go="1">Màn 1 · Người mua chat với AI</button>
+  <button id="nav2" data-go="2">Màn 2 · Nhân viên duyệt hồ sơ</button>
+</nav>
+<main>
+  <section>
+    <div id="screen1" class="panel">
+      <div class="sc">
+        <button id="sc4" class="on" data-sc="s4">Ca #4 · Mô tả bị sửa</button>
+        <button id="sc6" data-sc="s6">Ca #6 · Giày size 42</button>
+        <button class="reset" data-act="reset">Chạy lại</button>
+      </div>
+      <div class="banner">Người mua đang ở trong "Trò chuyện với Shopee". Bấm các nút ở cuối khung chat để đi qua ca.</div>
+      <div id="chat" class="chat"></div>
+      <div id="acts" class="acts"></div>
+    </div>
+    <div id="screen2" class="panel hidden">
+      <div class="banner">Màn của nhân viên xử lý khiếu nại. Hồ sơ chỉ hiện căn cứ của hai phía, không có kết luận của AI.</div>
+      <div id="staff"></div>
+    </div>
+  </section>
+  <aside class="panel legend">
+    <h3>Chú thích (số trên màn hình)</h3>
+    <ol>
+      <li><span class="mk">1</span><span><b>G2</b> · Nhãn "Trợ lý AI": người dùng biết đang nói chuyện với AI.</span></li>
+      <li><span class="mk">2</span><span><b>G11</b> · Thẻ "Căn cứ": hai bản mô tả cạnh nhau, có ngày, phần khác nhau được tô nổi.</span></li>
+      <li><span class="mk">3</span><span><b>G10</b> · Câu AI "chưa thấy căn cứ", không nói "từ chối", chỉ xin đúng một thứ còn thiếu. <code>tu_choi_khieu_nai</code> là mức Cấm nên không có nút nào để đóng khiếu nại.</span></li>
+      <li><span class="mk">4</span><span><b>G9</b> · Nút "Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên" và "Rút lại". <code>chuyen_truong_nhom</code> là mức Tự làm, có thể rút lại.</span></li>
+      <li><span class="mk">5</span><span><b>PAIR Explainability + Trust</b> · Màn nhân viên: hồ sơ hai phía, không có kết luận của AI.</span></li>
+      <li><span class="mk">6</span><span><b><code>duyet_hoan_tien</code> · Cần duyệt</b> · Nút "Duyệt hoàn tiền" chỉ bật sau khi người bán phản hồi hoặc hết hạn phản hồi.</span></li>
+    </ol>
+    <div class="lv">
+      <div><span class="chip auto">Tự làm</span> yeu_cau_bang_chung, chuyen_truong_nhom, soan_de_xuat_hoan</div>
+      <div><span class="chip approve">Cần duyệt</span> duyet_hoan_tien (nhân viên bấm)</div>
+      <div><span class="chip ban">Cấm</span> tu_choi_khieu_nai, phat_shop (không có nút trên màn hình)</div>
+    </div>
+  </aside>
+</main>
+<script>
+(function(){
+  var cases = [];
+  var scen = 's4';
+  var st = {};
+  var el = function(id){ return document.getElementById(id); };
+
+  function tools(list){
+    var h = '<div class="tools">';
+    list.forEach(function(t){ h += '<span class="tool">' + t[0] + ' <span class="chip ' + t[1] + '">' + t[2] + '</span></span>'; });
+    return h + '</div>';
+  }
+  function auto(name){ return [name, 'auto', 'Tự làm']; }
+
+  function s4Acts(){
+    return [
+      { act: 'ok4', label: 'Đã hiểu' },
+      { act: 'dis4', label: 'Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên', pri: true, mk: 4 }
+    ];
+  }
+  function s6Acts(){
+    return [
+      { act: 'm27', label: 'Gửi ảnh đo: 27 cm (giả lập)' },
+      { act: 'm255', label: 'Gửi ảnh đo: 25,5 cm (giả lập)' },
+      { act: 'dis6', label: 'Tôi không đồng ý → chuyển nhân viên', pri: true, mk: 4 }
+    ];
+  }
+  function afterEscalate(){
+    return [
+      { act: 'goStaff', label: 'Xem hồ sơ bên nhân viên →', pri: true },
+      { act: 'undo', label: 'Rút lại', mk: 4 }
+    ];
+  }
+
+  function init(){
+    st.s4 = { msgs: [], acts: s4Acts(), caseRef: null };
+    st.s6 = { msgs: [], acts: s6Acts(), caseRef: null, measure: null };
+
+    st.s4.msgs.push({ who: 'user', html: 'Trang ghi màu đen mà shop gửi màu xám, không đúng mô tả.' });
+    st.s4.msgs.push({ who: 'ai', html:
+      '<p>Mình đã kiểm tra đơn #A123. Lúc bạn đặt (ngày 01/11), trang sản phẩm ghi màu "xám khói". Ngày 03/11 shop đã đổi trang thành "đen" cho lô hàng mới. Áo bạn nhận được khớp với mô tả lúc bạn đặt, nên mình chưa thấy căn cứ để coi là không đúng mô tả. Nếu bạn thấy áo vẫn khác ảnh lúc đặt, bạn có thể gửi ảnh, mình sẽ chuyển nhân viên xem.<span class="mk">3</span></p>' +
+      '<div class="card"><h4>Căn cứ <span class="mk">2</span></h4><div class="two">' +
+      '<div><b>Mô tả lúc bạn đặt (01/11)</b>Áo thun · màu <span class="diff">xám khói</span></div>' +
+      '<div><b>Mô tả hiện tại (sửa 03/11)</b>Áo thun · màu <span class="diff">đen</span></div></div></div>' +
+      '<span class="deadline">Hạn trả hàng: còn 5 ngày</span>' });
+
+    st.s6.msgs.push({ who: 'user', html: 'Giày ghi size 42 mà đi chật như 41, không đúng mô tả.<br><small>Ảnh đính kèm: tem giày ghi size 42</small>' });
+    st.s6.msgs.push({ who: 'ai', html:
+      tools([auto('yeu_cau_bang_chung')]) +
+      '<p>Mình thấy tem giày bạn gửi ghi size 42, khớp với mô tả lúc đặt, nên hiện chưa đủ căn cứ để coi là không đúng mô tả. Form giày mỗi hãng có thể khác nhau. Mô tả có bảng size ghi size 42 dài lòng 27 cm. Bạn đo giúp mình chiều dài lòng giày và gửi ảnh thước đo nhé. Nếu lệch so với bảng size, mình sẽ hướng dẫn bạn gửi yêu cầu trả hàng.<span class="mk">3</span></p>' +
+      '<div class="card"><h4>Căn cứ <span class="mk">2</span></h4><div class="two">' +
+      '<div><b>Mô tả lúc đặt</b>Size 42, dài lòng <span class="diff">27 cm</span></div>' +
+      '<div><b>Ảnh tem bạn gửi</b>Size 42 (khớp)</div></div></div>' +
+      '<div class="card"><h4>Còn thiếu (1 mục) <span class="mk">3</span></h4><div class="need">Ảnh đo chiều dài lòng giày</div></div>' +
+      '<span class="deadline">Hạn trả hàng: còn 5 ngày</span>' });
+  }
+
+  function say(s, who, html){ st[s].msgs.push({ who: who, html: html }); }
+  function addCase(s, c){ cases.push(c); st[s].caseRef = c; }
+
+  var handlers = {
+    ok4: function(){
+      say('s4','user','Đã hiểu');
+      say('s4','sys','Kết thúc. Không ai bị báo. Khách vẫn có thể mở lại nếu thấy không đúng.');
+      st.s4.acts = [];
+    },
+    dis4: function(){
+      say('s4','user','Tôi vẫn thấy không đúng. Mình gửi ảnh áo nhận được.');
+      say('s4','ai', tools([auto('chuyen_truong_nhom')]) + '<p>Mình đã chuyển hồ sơ cho nhân viên kèm cả hai bản mô tả và ảnh bạn gửi. Nhân viên phản hồi trong 24 giờ. Người bán cũng được báo và có 48 giờ để phản hồi. Hạn trả hàng của bạn vẫn còn 5 ngày. Nếu chuyển nhầm, bạn bấm "Rút lại".</p>');
+      addCase('s4', { id: '#A123', product: 'Áo thun', ordered: 'Màu "xám khói" (lưu 01/11)', current: 'Màu "đen" (sửa 03/11)', claim: 'Trang ghi đen mà nhận xám', evidence: 'Ảnh áo nhận: màu xám', sellerReply: 'Hàng gửi đúng theo đơn đặt, mô tả đã đổi sau đó.', sellerState: 'wait', decision: null });
+      st.s4.acts = afterEscalate();
+    },
+    m27: function(){
+      st.s6.measure = '27';
+      say('s6','user','Mình đo lòng giày được 27 cm. (ảnh thước đo)');
+      say('s6','ai','<p>Số đo 27 cm khớp bảng size 42 trong mô tả lúc đặt, nên mình chưa thấy căn cứ để đề xuất hoàn tiền. Nếu bạn vẫn thấy không đúng, mình chuyển nhân viên xem. Hạn trả hàng còn 5 ngày.</p>');
+      st.s6.acts = [{ act: 'dis6', label: 'Tôi không đồng ý → chuyển nhân viên', pri: true, mk: 4 }];
+    },
+    m255: function(){
+      st.s6.measure = '25,5';
+      say('s6','user','Mình đo lòng giày được 25,5 cm. (ảnh thước đo)');
+      say('s6','ai', tools([auto('soan_de_xuat_hoan')]) +
+        '<p>Số đo 25,5 cm lệch 1,5 cm so với bảng size 42 (27 cm). Mình đã soạn đề xuất hoàn tiền kèm căn cứ của cả hai bên và gửi nhân viên. <b>Mình chưa hoàn tiền</b>: nhân viên chỉ duyệt sau khi người bán phản hồi hoặc hết hạn phản hồi 48 giờ.</p>' +
+        '<div class="tools"><span class="tool">duyet_hoan_tien <span class="chip approve">Cần duyệt</span></span></div>');
+      addCase('s6', { id: '#B456', product: 'Giày chạy bộ', ordered: 'Size 42, dài lòng 27 cm (lưu 01/11)', current: 'Không đổi', claim: 'Chật như size 41', evidence: 'Ảnh tem: size 42 · Ảnh đo: 25,5 cm', sellerReply: 'Giày đúng size 42, tem còn nguyên.', sellerState: 'wait', decision: null });
+      st.s6.acts = afterEscalate();
+    },
+    dis6: function(){
+      say('s6','user','Tôi không đồng ý. Mình muốn gặp nhân viên.');
+      say('s6','ai', tools([auto('chuyen_truong_nhom')]) + '<p>Mình đã chuyển hồ sơ cho nhân viên kèm căn cứ của cả hai bên. Nhân viên phản hồi trong 24 giờ, người bán có 48 giờ để phản hồi. Hạn trả hàng của bạn vẫn còn 5 ngày. Nếu chuyển nhầm, bạn bấm "Rút lại".</p>');
+      var m = st.s6.measure;
+      addCase('s6', { id: '#B456', product: 'Giày chạy bộ', ordered: 'Size 42, dài lòng 27 cm (lưu 01/11)', current: 'Không đổi', claim: 'Chật như size 41', evidence: 'Ảnh tem: size 42 · ' + (m ? 'Ảnh đo: ' + m + ' cm' : 'Chưa có ảnh đo'), sellerReply: 'Giày đúng size 42, tem còn nguyên.', sellerState: 'wait', decision: null });
+      st.s6.acts = afterEscalate();
+    },
+    undo: function(){
+      var s = st[scen];
+      var i = cases.indexOf(s.caseRef);
+      if (i >= 0) cases.splice(i, 1);
+      s.caseRef = null;
+      say(scen,'user','Rút lại hồ sơ');
+      say(scen,'sys','Đã rút lại. Hồ sơ không còn trong hàng chờ của nhân viên, hạn trả hàng của bạn vẫn còn 5 ngày.');
+      s.acts = scen === 's4' ? s4Acts() : s6Acts();
+    },
+    goStaff: function(){ show(2); }
+  };
+
+  function renderChat(){
+    var s = st[scen], h = '';
+    s.msgs.forEach(function(m){
+      if (m.who === 'sys') { h += '<div class="msg sys">' + m.html + '</div>'; return; }
+      if (m.who === 'user') { h += '<div class="msg user"><div class="who">Người mua</div>' + m.html + '</div>'; return; }
+      h += '<div class="msg ai"><div class="who">Trợ lý AI <span class="mk">1</span></div>' + m.html + '</div>';
+    });
+    el('chat').innerHTML = h;
+    var a = '';
+    s.acts.forEach(function(x){ a += '<button class="' + (x.pri ? 'pri' : '') + '" data-act="' + x.act + '">' + x.label + (x.mk ? '<span class="mk">' + x.mk + '</span>' : '') + '</button>'; });
+    el('acts').innerHTML = a;
+  }
+
+  function sellerText(c){
+    if (c.sellerState === 'replied') return 'Đã phản hồi (dữ liệu dựng): "' + c.sellerReply + '"';
+    if (c.sellerState === 'expired') return 'Hết hạn phản hồi 48 giờ, người bán không phản hồi';
+    return 'Chưa phản hồi · còn 48 giờ';
+  }
+
+  function renderStaff(){
+    if (!cases.length) { el('staff').innerHTML = '<div class="empty">Chưa có hồ sơ. Quay lại Màn 1, đi qua một ca và bấm chuyển nhân viên.</div>'; return; }
+    var h = '';
+    cases.forEach(function(c, i){
+      var open = c.sellerState !== 'wait';
+      h += '<div class="case"><h3>Đơn ' + c.id + ' · ' + c.product + '</h3>' +
+        '<p class="muted">Hồ sơ chỉ hiện căn cứ của hai phía, không có kết luận của AI.</p>' +
+        '<div class="card"><h4>Căn cứ của cả hai phía <span class="mk">5</span></h4><div class="two">' +
+        '<div><b>Mô tả lúc đặt</b>' + c.ordered + '</div><div><b>Mô tả hiện tại</b>' + c.current + '</div></div>' +
+        '<div class="two"><div><b>Người mua nói</b>' + c.claim + '<br>' + c.evidence + '</div><div><b>Người bán</b>' + sellerText(c) + '</div></div></div>' +
+        '<span class="deadline">Hạn trả hàng của khách: còn 5 ngày</span>' +
+        '<div class="sim">Giả lập phía người bán: ' +
+        '<button data-sim="replied" data-i="' + i + '">Người bán đã phản hồi</button>' +
+        '<button data-sim="expired" data-i="' + i + '">Hết hạn phản hồi</button></div>' +
+        '<div class="acts">' +
+        '<button class="pri" data-staff="ok" data-i="' + i + '"' + (open ? '' : ' disabled') + '>Duyệt hoàn tiền <span class="chip approve">Cần duyệt</span><span class="mk">6</span></button>' +
+        '<button data-staff="more" data-i="' + i + '">Chưa đủ căn cứ, hỏi thêm</button>' +
+        '</div>' +
+        (open ? '' : '<div class="gate">Nút "Duyệt hoàn tiền" chỉ bật sau khi người bán phản hồi hoặc hết hạn phản hồi.</div>') +
+        (c.decision ? '<div class="result">' + c.decision + '</div>' : '') + '</div>';
+    });
+    el('staff').innerHTML = h;
+  }
+
+  function show(n){
+    el('screen1').className = 'panel' + (n === 1 ? '' : ' hidden');
+    el('screen2').className = 'panel' + (n === 2 ? '' : ' hidden');
+    el('nav1').className = n === 1 ? 'on' : '';
+    el('nav2').className = n === 2 ? 'on' : '';
+    if (n === 2) renderStaff();
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('button');
+    if (!t) return;
+    if (t.disabled) return;
+    if (t.dataset.go) { show(Number(t.dataset.go)); return; }
+    if (t.dataset.sc) { scen = t.dataset.sc; el('sc4').className = scen === 's4' ? 'on' : ''; el('sc6').className = scen === 's6' ? 'on' : ''; renderChat(); return; }
+    if (t.dataset.sim) { cases[Number(t.dataset.i)].sellerState = t.dataset.sim; renderStaff(); return; }
+    if (t.dataset.staff) {
+      var c = cases[Number(t.dataset.i)];
+      c.decision = t.dataset.staff === 'ok'
+        ? 'Nhân viên đã duyệt hoàn tiền (người bấm là nhân viên, không phải AI). Người bán được báo.'
+        : 'Nhân viên yêu cầu thêm bằng chứng từ cả hai bên. Khách và người bán đều được báo.';
+      renderStaff();
+      return;
+    }
+    if (t.dataset.act === 'reset') { var keepScen = scen; cases = []; init(); scen = keepScen; renderChat(); renderStaff(); return; }
+    var fn = handlers[t.dataset.act];
+    if (fn) { fn(); renderChat(); renderStaff(); }
+  });
+
+  init(); renderChat(); renderStaff();
+})();
+</script>
+</body>
+</html>

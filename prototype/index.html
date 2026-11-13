@@ -205,6 +205,7 @@ main{display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:20px;m
     },
     undo: function(){
       var s = st[scen];
+      if (s.caseRef && s.caseRef.approved) return;
       var i = cases.indexOf(s.caseRef);
       if (i >= 0) cases.splice(i, 1);
       s.caseRef = null;
@@ -249,8 +250,8 @@ main{display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:20px;m
         '<button data-sim="replied" data-i="' + i + '">Người bán đã phản hồi</button>' +
         '<button data-sim="expired" data-i="' + i + '">Hết hạn phản hồi</button></div>' +
         '<div class="acts">' +
-        '<button class="pri" data-staff="ok" data-i="' + i + '"' + (open ? '' : ' disabled') + '>Duyệt hoàn tiền <span class="chip approve">Cần duyệt</span><span class="mk">6</span></button>' +
-        '<button data-staff="more" data-i="' + i + '">Chưa đủ căn cứ, hỏi thêm</button>' +
+        '<button class="pri" data-staff="ok" data-i="' + i + '"' + (open && !c.approved ? '' : ' disabled') + '>Duyệt hoàn tiền <span class="chip approve">Cần duyệt</span><span class="mk">6</span></button>' +
+        '<button data-staff="more" data-i="' + i + '"' + (c.approved ? ' disabled' : '') + '>Chưa đủ căn cứ, hỏi thêm</button>' +
         '</div>' +
         (open ? '' : '<div class="gate">Nút "Duyệt hoàn tiền" chỉ bật sau khi người bán phản hồi hoặc hết hạn phản hồi.</div>') +
         (c.decision ? '<div class="result">' + c.decision + '</div>' : '') + '</div>';
@@ -275,9 +276,20 @@ main{display:grid;grid-template-columns:minmax(0,640px) minmax(0,1fr);gap:20px;m
     if (t.dataset.sim) { cases[Number(t.dataset.i)].sellerState = t.dataset.sim; renderStaff(); return; }
     if (t.dataset.staff) {
       var c = cases[Number(t.dataset.i)];
-      c.decision = t.dataset.staff === 'ok'
-        ? 'Nhân viên đã duyệt hoàn tiền (người bấm là nhân viên, không phải AI). Người bán được báo.'
-        : 'Nhân viên yêu cầu thêm bằng chứng từ cả hai bên. Khách và người bán đều được báo.';
+      if (c.approved) return;
+      if (t.dataset.staff === 'ok') {
+        c.approved = true;
+        c.decision = 'Nhân viên đã duyệt hoàn tiền (người bấm là nhân viên, không phải AI). Người bán được báo.';
+        ['s4','s6'].forEach(function(k){
+          if (st[k].caseRef === c) {
+            st[k].acts = [{ act: 'goStaff', label: 'Xem hồ sơ bên nhân viên →', pri: true }];
+            say(k, 'sys', 'Nhân viên đã duyệt hoàn tiền cho đơn ' + c.id + '. Hồ sơ đã đóng nên không thể rút lại.');
+          }
+        });
+        renderChat();
+      } else {
+        c.decision = 'Nhân viên yêu cầu thêm bằng chứng từ cả hai bên. Khách và người bán đều được báo.';
+      }
       renderStaff();
       return;
     }

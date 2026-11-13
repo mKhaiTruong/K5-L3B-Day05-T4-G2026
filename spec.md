@@ -2,11 +2,11 @@
 
 **Lớp:** L3B · **Bàn / zone:** \_\_\_\_ · **Track:** T4 · Thương mại điện tử
 
-| Họ và Tên             | Mã Học Viên | Việc đã làm                                                                                                                                                     |
-| --------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Trương Đặng Minh Khuê | 2A202603785 | Soạn kịch bản demo 4', chuẩn bị 3–4 ca lạ để tập trả lời, chia ai nói phần nào                                                                                  |
-| Trịnh Tuấn Phong      | 2A202603781 | Đưa câu AI nguyên văn ở §3 vào prototype; chụp ảnh, đánh số; viết prototype/README.md và hoàn thiện §5 và Viết §6: 3 tiêu chí Pass/Fail, chấm thử trên #4 và #6 |
-| Triệu Quốc Khánh      | 2A202603749 | Dựng prototype ca #4, gồm 2 màn hình: chat người mua và màn hình nhân viên duyệt                                                                                |
+| Họ và Tên             | Mã Học Viên | Việc đã làm                                                                                                                                                                  |
+| --------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Trương Đặng Minh Khuê | 2A202603785 | Soạn kịch bản demo 4', chuẩn bị 3–4 ca lạ để tập trả lời, chia ai nói phần nào Điền cột "Việc đã làm" và ô Bàn/zone; kiểm tra repo public (mở bằng cửa sổ ẩn danh); nộp link |
+| Trịnh Tuấn Phong      | 2A202603781 | Đưa câu AI nguyên văn ở §3 vào prototype; chụp ảnh, đánh số; viết prototype/README.md và hoàn thiện §5 và Viết §6: 3 tiêu chí Pass/Fail, chấm thử trên #4 và #6              |
+| Triệu Quốc Khánh      | 2A202603749 | Dựng prototype ca #4, gồm 2 màn hình: chat người mua và màn hình nhân viên duyệt                                                                                             |
 
 ## §1. Lát cắt & phạm vi
 
@@ -108,11 +108,11 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 | Tool                 | Khuê                                                       | Phong                                                      | Khánh                                                        | Lệch? | Nhóm chốt                   |
 | -------------------- | ---------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ | ----- | --------------------------- |
-| `yeu_cau_bang_chung` | tự làm                                                     | tự làm                                                     | tự làm                                                       |       | **tự làm**                  |
-| `chuyen_truong_nhom` | tự làm                                                     | tự làm                                                     | tự làm                                                       |       | **tự làm**                  |
-| `soan_hoan_tien`     | cần duyệt (nhân viên duyệt sau hạn phản hồi của người bán) | cần duyệt (nhân viên duyệt sau hạn phản hồi của người bán) | cần duyệt (tách 2 bước: AI soạn đề xuất, nhân viên xác nhận) |       | **cần duyệt + tách 2 bước** |
-| `tu_choi_khieu_nai`  | cấm                                                        | cấm                                                        | cấm                                                          |       | **cấm**                     |
-| `phat_shop`          | cấm                                                        | cấm                                                        | cấm                                                          |       | **cấm**                     |
+| `yeu_cau_bang_chung` | tự làm                                                     | tự làm                                                     | tự làm                                                       | không | **tự làm**                  |
+| `chuyen_truong_nhom` | tự làm                                                     | tự làm                                                     | tự làm                                                       | không | **tự làm**                  |
+| `soan_hoan_tien`     | cần duyệt (nhân viên duyệt sau hạn phản hồi của người bán) | cần duyệt (nhân viên duyệt sau hạn phản hồi của người bán) | cần duyệt (tách 2 bước: AI soạn đề xuất, nhân viên xác nhận) | không | **cần duyệt + tách 2 bước** |
+| `tu_choi_khieu_nai`  | cấm                                                        | cấm                                                        | cấm                                                          | không | **cấm**                     |
+| `phat_shop`          | cấm                                                        | cấm                                                        | cấm                                                          | không | **cấm**                     |
 
 ### Mức cho từng tool
 
@@ -133,7 +133,7 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 ### Tool khó xếp nhất: `soan_hoan_tien`
 
-- **Mỗi người chọn:** Phong — cần duyệt, nhân viên duyệt sau hạn phản hồi của người bán · Khánh — cần duyệt, tách 2 bước · Khuê — \_\_\_\_.
+- **Mỗi người chọn:** Phong — cần duyệt, nhân viên duyệt sau hạn phản hồi của người bán · Khánh — cần duyệt, tách 2 bước · Khuê — cần duyệt, nhân viên duyệt sau hạn phản hồi của người bán. Cả 3 cùng chọn _cần duyệt_, nhưng nhóm vẫn cân nhắc _cấm_ vì đây là tool mà mức nào cũng có giá (bảng dưới).
 - **Cái giá của mỗi phía:**
 
 | Mức                                                  | Cái giá                                                                         | Kịch bản ở §2                                       |

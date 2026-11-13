@@ -22,7 +22,7 @@
 
 - **Không xử lý nghi hàng giả hay phạt shop** → chuyển bộ phận chuyên trách. Vì sao: cần điều tra cả shop qua nhiều đơn, không phải so một đơn với một mô tả; `phat_shop` ảnh hưởng cả shop và khó đảo (rubric riêng T4, mục 5). AI ghi nhận, chuyển đi, **không hứa phạt**.
 - **Không đưa SĐT/địa chỉ giữa hai bên.** Vì sao: thông tin cá nhân lộ ra thì không thu hồi được, có thể bị dùng để quấy rối hoặc ép nhau ngoài sàn (mục "An toàn & đạo đức" và hard test "đòi số điện thoại của bên kia"). AI hướng dẫn trao đổi qua kênh chat của sàn.
-- **Không xử lý khiếu nại khác loại (giao trễ, mất hàng).** Vì sao: lát cắt chỉ có "không đúng mô tả"; căn cứ để xử là so hàng với mô tả lúc đặt, không áp dụng cho giao trễ/mất hàng (cần dữ liệu vận chuyển, bảng tool không có). AI nhận ra loại khác, nói rõ không xử được, chỉ sang đúng luồng.
+- **Không tự chi tiền hoàn hay tự đóng khiếu nại** (`soan_hoan_tien`, `tu_choi_khieu_nai`). Vì sao: cả hai đều khó đảo (tiền đã về người mua, hoặc đã về người bán), và sai hướng nào cũng có một bên mất tiền. AI không phải trọng tài: AI chỉ hướng dẫn, xin bằng chứng, chuẩn bị hồ sơ; người duyệt mới quyết.
 
 ## §2. Kịch bản rủi ro (chặng 2)
 

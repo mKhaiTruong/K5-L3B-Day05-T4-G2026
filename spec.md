@@ -67,7 +67,7 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 
 - **Người dùng thấy:** thẻ **"Căn cứ"** hiện hai bản mô tả cạnh nhau (lúc đặt / hiện tại), có ngày và phần thay đổi được tô màu · nhãn "Trợ lý AI" · chip **"Hạn trả hàng: còn 5 ngày"** · nút **"Đã hiểu"** và **"Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên"**.
 - **Làm gì tiếp:** bấm "Đã hiểu" → kết thúc, không ai bị báo. Bấm nút còn lại → gửi ảnh → hồ sơ (`chuyen_truong_nhom`) tới nhân viên kèm cả hai bản mô tả.
-- **Ai được báo, sau bao lâu:** chỉ khi khách gửi lên: nhân viên nhận hồ sơ trong 24h; người bán nhận thông báo khiếu nại kèm hạn phản hồi (hai bên cùng được nghe — rubric riêng T4, mục 3).
+- **Ai được báo, sau bao lâu:** chỉ khi khách gửi lên: nhân viên nhận hồ sơ trong 24h; người bán nhận thông báo khiếu nại kèm hạn phản hồi 48 giờ (hai bên cùng được nghe — rubric riêng T4, mục 3).
 - **Quyết định: trả lời kèm giới hạn.**
   - Loại **hỏi lại**: AI đã đủ dữ liệu (có bản lưu lúc đặt), hỏi thêm chỉ làm khách bực (như #10).
   - Loại **chuyển người ngay**: nhân viên cũng chỉ nhìn đúng hai bản mô tả đó → khách chờ vô ích (hướng C ở §1).
@@ -84,8 +84,8 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 > "Mình thấy tem giày bạn gửi ghi **size 42**, khớp với mô tả lúc đặt, nên hiện **chưa đủ căn cứ** để coi là không đúng mô tả. Form giày mỗi hãng có thể khác nhau. Mô tả có bảng size ghi size 42 dài lòng **27 cm**. Bạn đo giúp mình chiều dài lòng giày và gửi ảnh thước đo nhé. Nếu lệch so với bảng size, mình sẽ hướng dẫn bạn gửi yêu cầu trả hàng. Hạn trả hàng của bạn còn **5 ngày**."
 
 - **Người dùng thấy:** thẻ **"Căn cứ"** (ảnh tem cạnh dòng "Size 42" và bảng size của mô tả lúc đặt) · thẻ **"Còn thiếu"** chỉ có **1 mục**: "Ảnh đo chiều dài lòng giày" · đồng hồ **hạn trả hàng** · nút **"Gửi ảnh đo"** và **"Tôi không đồng ý → chuyển nhân viên"**.
-- **Làm gì tiếp:** gửi ảnh đo → lệch so với bảng size thì hướng dẫn gửi yêu cầu trả hàng, không lệch thì AI nói rõ là không lệch. Hoặc bấm chuyển nhân viên. Khách không làm gì → nhắc lại trước khi hết hạn trả hàng (chặn hướng B).
-- **Ai được báo, sau bao lâu:** chưa báo ai cho tới khi có yêu cầu chính thức hoặc khách bấm chuyển; khi đó nhân viên nhận hồ sơ trong 24h, hồ sơ ghi **căn cứ của cả hai phía** (tem khớp + cảm nhận của khách); người bán nhận thông báo kèm hạn phản hồi.
+- **Làm gì tiếp:** gửi ảnh đo → lệch so với bảng size thì AI **tự làm** `soan_de_xuat_hoan` (chỉ soạn hồ sơ đề xuất hoàn kèm căn cứ hai phía, chưa chuyển tiền), nhân viên duyệt bằng `duyet_hoan_tien` sau khi người bán phản hồi hoặc hết hạn phản hồi 48 giờ; không lệch thì AI nói rõ là không lệch. Hoặc bấm chuyển nhân viên. Khách không làm gì → nhắc lại trước khi hết hạn trả hàng (chặn hướng B).
+- **Ai được báo, sau bao lâu:** chưa báo ai cho tới khi có yêu cầu chính thức hoặc khách bấm chuyển; khi đó nhân viên nhận hồ sơ trong 24h, hồ sơ ghi **căn cứ của cả hai phía** (tem khớp + cảm nhận của khách); người bán nhận thông báo kèm hạn phản hồi 48 giờ.
 - **Quyết định: xin đúng một bằng chứng đo được, kèm trả lời có giới hạn.**
   - Loại **hướng dẫn hoàn ngay**: chính là hướng A — người bán đúng mà vẫn thua.
   - Loại **hỏi lại chung chung** ("bạn gửi thêm ảnh nhé"): khách không biết phải gửi gì (lời người mua trong track: "không ai nói tôi còn thiếu cái gì").
@@ -186,7 +186,7 @@ _Mã đơn, ngày, thời hạn, số đo dưới đây là dữ liệu dựng._
 | --- | --------- | ------------------------------------------------------------------ | --------------------------- | ----------------------------------------- |
 | 1   | Chat      | Nhãn "Trợ lý AI"                                                   | G2                          | —                                         |
 | 2   | Chat      | Thẻ "Căn cứ": hai bản mô tả cạnh nhau, có ngày, tô phần thay đổi   | G11                         | —                                         |
-| 3   | Chat      | Câu AI "chưa thấy căn cứ", không nói "từ chối"                     | G10                         | `tu_choi_khieu_nai` cấm → không có nút    |
+| 3   | Chat      | Câu AI "chưa thấy căn cứ", không nói "từ chối"; ở #6 có thêm thẻ "Còn thiếu (1 mục)"                     | G10                         | `tu_choi_khieu_nai` cấm → không có nút    |
 | 4   | Chat      | Nút "Tôi vẫn thấy không đúng → gửi ảnh cho nhân viên" + "Rút lại"  | G9                          | `chuyen_truong_nhom` tự làm, có "Rút lại" |
 | 5   | Nhân viên | Hồ sơ hai phía, không có kết luận của AI                           | PAIR Explainability + Trust | —                                         |
 | 6   | Nhân viên | Nút "Duyệt hoàn tiền" chỉ bật sau khi người bán phản hồi / hết hạn | —                           | `duyet_hoan_tien` cần duyệt               |
